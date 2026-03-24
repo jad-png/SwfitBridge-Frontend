@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  font-family: 'Space Grotesk', 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  @apply min-h-screen bg-base-200 text-base-content m-0;
+}
+
+#root {
+  @apply min-h-screen;
+}
+
+::selection {
+  @apply bg-primary text-primary-content;
+}
+
+@layer components {
+  .glass-card {
+    @apply bg-base-100/95 border border-base-200 shadow-soft rounded-3xl backdrop-blur;
+  }
+
+  .section-heading {
+    @apply text-2xl font-semibold text-base-content tracking-tight;
+  }
+
+  .muted-text {
+    @apply text-base-content/70 text-sm;
+  }
+
+  .page-stack {
+    @apply space-y-10 md:space-y-12;
+  }
+
+  .eyebrow-text {
+    @apply font-semibold uppercase tracking-[0.4em] text-base-content/60;
+  }
+}
