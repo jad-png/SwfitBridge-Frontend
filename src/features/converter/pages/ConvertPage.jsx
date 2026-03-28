@@ -86,7 +86,7 @@ function ConvertPage() {
 
     async function loadRecentJobs() {
       try {
-        const response = await fetchHistory({ limit: 6, offset: 0 })
+        const response = await fetchHistory({ size: 6, page: 0 })
         const rows = Array.isArray(response?.data)
           ? response.data
           : Array.isArray(response)
@@ -170,7 +170,7 @@ function ConvertPage() {
       appendJob('success', response?.messageReference ?? response?.transactionId)
 
       try {
-        const latest = await fetchHistory({ limit: 6, offset: 0 })
+        const latest = await fetchHistory({ size: 6, page: 0 })
         const rows = Array.isArray(latest?.data) ? latest.data : []
         setJobHistory(rows.map(normalizeHistoryJob))
       } catch {

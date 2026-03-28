@@ -1,8 +1,10 @@
+import { Eye } from 'lucide-react'
+import { Link } from 'react-router-dom'
 import CardSurface from '../../../components/ui/CardSurface'
-import CopyButton from '../../../components/ui/CopyButton'
 import SectionLabel from '../../../components/ui/SectionLabel'
 import Skeleton from '../../../components/ui/Skeleton'
 import StatusBadge from '../../../components/ui/StatusBadge'
+import { ROUTES } from '../../../app/routes/paths'
 
 function HistoryTable({ rows, isLoading, pagination, onPageChange }) {
   const pageCount = Math.max(pagination.pages, 1)
@@ -22,7 +24,7 @@ function HistoryTable({ rows, isLoading, pagination, onPageChange }) {
 
   return (
     <CardSurface>
-      <div className="overflow-hidden rounded-3xl border border-base-200/80" role="region" aria-live="polite">
+      <div className="overflow-x-auto rounded-3xl border border-base-200/80" role="region" aria-live="polite">
         <table className="table table-zebra">
           <thead>
             <tr className="eyebrow-text text-xs text-base-content/50">
@@ -32,7 +34,7 @@ function HistoryTable({ rows, isLoading, pagination, onPageChange }) {
               <th scope="col">Status</th>
               <th scope="col">Created</th>
               <th scope="col">Duration</th>
-              <th scope="col" className="sr-only">Clipboard</th>
+              <th scope="col" className="text-right">Preview</th>
             </tr>
           </thead>
           <tbody>
@@ -49,7 +51,13 @@ function HistoryTable({ rows, isLoading, pagination, onPageChange }) {
                 <td>{row.created}</td>
                 <td>{row.duration}</td>
                 <td className="text-right">
-                  <CopyButton text={row.id} label={`Copy ${row.id}`} size="xs" />
+                  <Link
+                    to={ROUTES.HISTORY_DETAIL.replace(':id', row.id)}
+                    className="btn btn-ghost btn-xs btn-square"
+                    aria-label={`Preview ${row.id}`}
+                  >
+                    <Eye className="h-4 w-4" />
+                  </Link>
                 </td>
               </tr>
             ))}
