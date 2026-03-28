@@ -13,6 +13,7 @@ const NAVIGATION = [
   { label: 'History', to: ROUTES.HISTORY, icon: History, nonAdminOnly: true },
   { label: 'Admin Dashboard', to: ROUTES.ADMIN, icon: Shield, adminOnly: true },
   { label: 'User Management', to: ROUTES.ADMIN_USERS, icon: Users, adminOnly: true },
+  { label: 'Conversion History', to: ROUTES.ADMIN_HISTORY, icon: History, adminOnly: true },
 ]
 
 function createInitialsFromUser(user) {

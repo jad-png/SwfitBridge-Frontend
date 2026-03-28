@@ -14,8 +14,11 @@ const SwiftDocumentationPage = lazy(() => import('../../features/misc/pages/Swif
 const UserOverviewPage = lazy(() => import('../../features/dashboard/pages/UserOverviewPage'))
 const ConvertPage = lazy(() => import('../../features/converter/pages/ConvertPage'))
 const HistoryPage = lazy(() => import('../../features/history/pages/HistoryPage'))
+const HistoryDetailPage = lazy(() => import('../../features/history/pages/HistoryDetailPage'))
 const AdminDashboard = lazy(() => import('../../features/admin/pages/AdminDashboard'))
 const UserManagementPage = lazy(() => import('../../features/admin/pages/UserManagementPage'))
+const AdminHistoryPage = lazy(() => import('../../features/admin/pages/AdminHistoryPage'))
+const AdminConversionDetailPage = lazy(() => import('../../features/admin/pages/AdminConversionDetailPage'))
 const ProfilePage = lazy(() => import('../../features/profile/pages/ProfilePage'))
 const NotFoundPage = lazy(() => import('../../features/misc/pages/NotFoundPage'))
 
@@ -64,6 +67,10 @@ const router = createBrowserRouter([
             element: withSuspense(<HistoryPage />),
           },
           {
+            path: ROUTES.HISTORY_DETAIL,
+            element: withSuspense(<HistoryDetailPage />),
+          },
+          {
             path: ROUTES.PROFILE,
             element: withSuspense(<ProfilePage />),
           },
@@ -77,6 +84,14 @@ const router = createBrowserRouter([
               {
                 path: ROUTES.ADMIN_USERS,
                 element: withSuspense(<UserManagementPage />),
+              },
+              {
+                path: ROUTES.ADMIN_HISTORY,
+                element: withSuspense(<AdminHistoryPage />),
+              },
+              {
+                path: ROUTES.ADMIN_HISTORY_DETAIL,
+                element: withSuspense(<AdminConversionDetailPage />),
               },
             ],
           },
