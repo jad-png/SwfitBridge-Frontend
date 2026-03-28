@@ -20,7 +20,7 @@ function useDashboardData() {
     setError(null)
 
     try {
-      const response = await fetchHistory({ limit: 25, offset: 0 })
+      const response = await fetchHistory({ size: 25, page: 0 })
       const rows = Array.isArray(response?.data)
         ? response.data
         : Array.isArray(response)
