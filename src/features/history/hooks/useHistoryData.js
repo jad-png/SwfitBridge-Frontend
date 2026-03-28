@@ -27,7 +27,7 @@ function useHistoryData(initialLimit = 20) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState(null)
   const [page, setPage] = useState(0)
-  const [limit] = useState(initialLimit)
+  const [size] = useState(initialLimit)
   const [total, setTotal] = useState(0)
   const [pages, setPages] = useState(0)
 
@@ -44,19 +44,22 @@ function useHistoryData(initialLimit = 20) {
     setError(null)
     try {
       const response = await fetchHistory({
-        limit,
-        offset: page * limit,
+        size,
+        page,
         status: filters.status,
       })
 
-      const normalized = (response?.data ?? []).map((item) => ({
+      const normalized = (response?.items ?? []).map((item) => ({
         id: item.transactionId,
         reference: item.messageReference ?? '—',
         messageType: item.messageType ?? '—',
         status: item.conversionStatus?.toLowerCase?.() ?? 'pending',
         created: formatTimestamp(item.requestTimestamp),
         duration: formatDuration(item.processingDurationMs),
+        username: item.username ?? '—',
+        fileName: item.fileName ?? '—',
       }))
+
 
       setRawRows(normalized)
       setTotal(response?.pagination?.total ?? normalized.length)
@@ -67,7 +70,7 @@ function useHistoryData(initialLimit = 20) {
     } finally {
       setIsLoading(false)
     }
-  }, [filters.status, limit, page])
+  }, [filters.status, size, page])
 
   useEffect(() => {
     loadHistory()
@@ -79,14 +82,14 @@ function useHistoryData(initialLimit = 20) {
 
   const pagination = useMemo(
     () => ({
-      limit,
+      size,
       total,
       pages,
       page,
       hasPrev: page > 0,
       hasNext: page + 1 < Math.max(pages, 1),
     }),
-    [limit, page, pages, total],
+    [size, page, pages, total],
   )
 
   const updateFilters = useCallback(
