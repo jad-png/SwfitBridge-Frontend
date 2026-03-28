@@ -82,7 +82,7 @@ function pickUserRows(rows, user) {
 }
 
 export async function fetchUserOverviewData(user) {
-  const response = await fetchHistory({ limit: 100, offset: 0 })
+  const response = await fetchHistory({ size: 100, page: 0 })
   const rows = extractHistoryRows(response)
   const personalRows = pickUserRows(rows, user)
   const successful = personalRows.filter((row) => {
@@ -143,9 +143,9 @@ export async function fetchAdminDashboardData() {
   const totalConversions = Number(analytics?.totalConversions ?? analytics?.conversionsTotal ?? 0)
   const totalSuccessfulConversions = Number(
     analytics?.totalSuccessfulConversions
-      ?? analytics?.successfulConversions
-      ?? analytics?.conversionsSuccessful
-      ?? 0,
+    ?? analytics?.successfulConversions
+    ?? analytics?.conversionsSuccessful
+    ?? 0,
   )
 
   const totalGuests = users.filter((user) => {
@@ -198,29 +198,18 @@ export async function fetchAdminDashboardData() {
   }
 }
 
-/**
- * Fetch user statistics from the backend API
- * GET /api/users/stats
- * Returns: { totalConversions, successfulConversions, failedConversions, successRate, recentActivity[], activityTrend[] }
- */
+
 export async function fetchUserStatsFromAPI() {
   const { data } = await apiClient.get('/users/stats')
   return normalizeUserStats(data)
 }
 
-/**
- * Fetch admin statistics from the backend API
- * GET /api/admin/stats
- * Returns: { metrics: { totalUsers, totalConversions, totalSuccessfulConversions, conversionSuccessRate, totalGuests }, charts: { conversionVolume[], successRateTrend[] } }
- */
+
 export async function fetchAdminStatsFromAPI() {
   const { data } = await apiClient.get('/admin/stats')
   return normalizeAdminStats(data)
 }
 
-/**
- * Normalize user stats from API response to expected format
- */
 function normalizeUserStats(data) {
   if (!data) {
     return {
@@ -238,7 +227,6 @@ function normalizeUserStats(data) {
   const failedConversions = Number(data?.failedConversions ?? totalConversions - successfulConversions)
   const successRate = Number(data?.successRate ?? 0)
 
-  // Ensure successRate is a percentage (if it comes as decimal like 0.93, convert to 93)
   const normalizedSuccessRate = successRate > 1 ? successRate : successRate * 100
 
   const recentActivity = Array.isArray(data?.recentActivity)
@@ -268,9 +256,6 @@ function normalizeUserStats(data) {
   }
 }
 
-/**
- * Normalize admin stats from API response to expected format
- */
 function normalizeAdminStats(data) {
   if (!data) {
     return {
